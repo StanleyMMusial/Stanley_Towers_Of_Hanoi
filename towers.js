@@ -19,29 +19,29 @@ const printStacks = () => {
   console.log("c: " + stacks.c);
 }
 
-const movePiece = (startStack, endStack) => {
+const movePiece = (startStack,endStack) => {
 // Move the last integer on the start stack to the end of the end stack //
-let stack1 = stacks[startStack]
-console.log(stack1)
-let stack2 = stacks[endStack]
-let poppedElement = stack1.pop()
-console.log(poppedElement)
-stack2.push(poppedElement)
-
+let poppedElement = startStack.pop()
+endStack.push(poppedElement)
 
 }
 
-const isLegal = () => {
-
+const isLegal = (startStack,endStack) => {
+    console.log(endStack)
+    let lastElementEnd = endStack[endStack.length - 1]
+    let lastElementStart = startStack[startStack.length - 1]
 }
+
 
 const checkForWin = () => {
 
 }
 
 const towersOfHanoi = (startStack, endStack) => {
-    console.log(startStack)
-movePiece(startStack,endStack)
+    startStack = stacks[startStack]
+    endStack = stacks[endStack]
+    isLegal(startStack,endStack)
+    movePiece(startStack,endStack)
 }
 
 const getPrompt = () => {
@@ -53,5 +53,35 @@ const getPrompt = () => {
     });
   });
 }
+//module.exports = movePiece;//
+//module.exports = checkForWin;//
+if (typeof describe === 'function') {
 
-getPrompt();
+    describe('#towersOfHanoi()', () => {
+      it('should be able to move a block', () => {
+        towersOfHanoi('a', 'b');
+        assert.deepEqual(stacks, { a: [4, 3, 2], b: [1], c: [] });
+      });
+      it('movesPieces', ()=> {
+         stacks = {
+            a: [],
+            b: [4, 3, 2, 1],
+            c: []
+          };
+
+          movePiece("b","c")
+
+          let expected = {
+            a: [],
+            b: [4, 3, 2],
+            c: [1]
+          };
+          assert.deepStrictEqual(stacks,expected)
+    })
+    });
+  } else {
+  
+    getPrompt();
+  
+  }
+  
