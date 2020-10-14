@@ -30,11 +30,30 @@ const isLegal = (startStack,endStack) => {
     console.log(endStack)
     let lastElementEnd = endStack[endStack.length - 1]
     let lastElementStart = startStack[startStack.length - 1]
+
+    console.log("lastElementStart", lastElementStart)
+    console.log("lastElementEnd" ,lastElementEnd)
+
+    if (lastElementEnd === undefined) {
+        return true
+    }
+
+    else if (lastElementStart < lastElementEnd) {
+        return true
+    }
+
+    else {
+        return false
+    }
 }
 
 
 const checkForWin = () => {
+    let stackLength = stacks[c.length]
 
+    if (stackLength == 4) {
+        console.log("Game has been won!")
+    }
 }
 
 const towersOfHanoi = (startStack, endStack) => {
@@ -42,6 +61,7 @@ const towersOfHanoi = (startStack, endStack) => {
     endStack = stacks[endStack]
     isLegal(startStack,endStack)
     movePiece(startStack,endStack)
+    
 }
 
 const getPrompt = () => {
@@ -53,8 +73,8 @@ const getPrompt = () => {
     });
   });
 }
-//module.exports = movePiece;//
-//module.exports = checkForWin;//
+
+
 if (typeof describe === 'function') {
 
     describe('#towersOfHanoi()', () => {
@@ -69,7 +89,7 @@ if (typeof describe === 'function') {
             c: []
           };
 
-          movePiece("b","c")
+          movePiece(stacks["b"],stacks["c"])
 
           let expected = {
             a: [],
@@ -78,6 +98,45 @@ if (typeof describe === 'function') {
           };
           assert.deepStrictEqual(stacks,expected)
     })
+        it('isLegalTrueUndefined', () => {
+            stacks = {
+                a: [4, 3, 2, 1],
+                b: [],
+                c: []
+              };
+              
+            let isLegalReturn = isLegal(stacks["a"],stacks["c"])
+
+            let expected = true
+
+            assert.strictEqual(isLegalReturn,expected)
+        })
+        it('isLegalFalse', () => {
+            stacks = {
+                a: [4, 3, 2],
+                b: [],
+                c: [1]
+              };
+              
+            let isLegalReturn = isLegal(stacks["a"],stacks["c"])
+
+            let expected = false
+
+            assert.strictEqual(isLegalReturn,expected)
+        })
+        it('isLegalTrue', () => {
+            stacks = {
+                a: [4, 3, 1],
+                b: [],
+                c: [2]
+              };
+              
+            let isLegalReturn = isLegal(stacks["a"],stacks["c"])
+
+            let expected = true
+
+            assert.strictEqual(isLegalReturn,expected)
+        })
     });
   } else {
   
