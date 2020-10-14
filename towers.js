@@ -31,9 +31,6 @@ const isLegal = (startStack,endStack) => {
     let lastElementEnd = endStack[endStack.length - 1]
     let lastElementStart = startStack[startStack.length - 1]
 
-    console.log("lastElementStart", lastElementStart)
-    console.log("lastElementEnd" ,lastElementEnd)
-
     if (lastElementEnd === undefined) {
         return true
     }
@@ -49,19 +46,32 @@ const isLegal = (startStack,endStack) => {
 
 
 const checkForWin = () => {
-    let stackLength = stacks[c.length]
+    let stackLength = stacks["c"].length
 
     if (stackLength == 4) {
-        console.log("Game has been won!")
+        return true
+    }
+
+    else {
+        return false
     }
 }
 
 const towersOfHanoi = (startStack, endStack) => {
     startStack = stacks[startStack]
     endStack = stacks[endStack]
-    isLegal(startStack,endStack)
-    movePiece(startStack,endStack)
-    
+
+    if (isLegal(startStack,endStack) === true) {
+        movePiece(startStack,endStack)
+    }
+
+    else if (isLegal(startStack,endStack) === false) {
+        console.log("Illegal move")
+    }
+
+    if (checkForWin() === true) {
+        console.log("Game win!")
+    }
 }
 
 const getPrompt = () => {
@@ -136,6 +146,32 @@ if (typeof describe === 'function') {
             let expected = true
 
             assert.strictEqual(isLegalReturn,expected)
+        })
+        it('checkForWinTrue', () => {
+            stacks = {
+                a: [],
+                b: [],
+                c: [4, 3, 2, 1]
+              };
+
+              let checkForWinReturn = checkForWin()
+
+              let expected = true
+
+              assert.strictEqual(checkForWinReturn,expected)
+        })
+        it('checkForWinFalse', () => {
+            stacks = {
+                a: [],
+                b: [1],
+                c: [4, 3, 2]
+              };
+
+              let checkForWinReturn = checkForWin()
+
+              let expected = false
+
+              assert.strictEqual(checkForWinReturn,expected)
         })
     });
   } else {
